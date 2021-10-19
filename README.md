@@ -25,12 +25,10 @@ pip install opencv-python
 
 
 ## OpenPose
-<hr />
 OpenPose has represented the first real-time multi-person system to jointly detect human body, hand, facial, and foot keypoints (total 135 keypoints) on single images.
 
 
 ## Raspberry pi 
-<hr />
 take a picture of the user with the Raspberry Pi camera module.
 
 # Server
