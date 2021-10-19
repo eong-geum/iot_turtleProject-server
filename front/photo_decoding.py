@@ -1,10 +1,19 @@
 import base64
 import requests
 import json
+import cv2
 
-res=requests.get("http://172.24.176.1:8080/photo")
-print(json.loads(res).get("name"));
+res=requests.get("http://172.10.8.60:8080/photo")
+json_data=json.loads(res.content)
+
+# api에서 가져온 JSON data decode
+photo_decode=base64.b64decode(json_data["encodingContent"])
+
+# 'test.jpg' 파일로 사진 저장.
+with open('test.jpg','wb') as f_output:
+    f_output.write(photo_decode)
 
 
-# photo_file=open("photo.png","wb")
-# photo_file.write(base64.b64encode(encodeImg))
+
+
+

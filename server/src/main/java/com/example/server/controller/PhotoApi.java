@@ -1,6 +1,7 @@
 package com.example.server.controller;
 
 import com.example.server.dto.PhotoDto;
+import com.google.gson.JsonObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +14,11 @@ public class PhotoApi {
 
     @GetMapping("/photo")
     public String getPhoto(PhotoDto photoDto){
-        System.out.println("get >>> "+ photoDto);
-        return photo.toString();
+        System.out.println("get >>> "+ photo);
+        JsonObject jsonObject=new JsonObject();
+        jsonObject.addProperty("name",photo.getName());
+        jsonObject.addProperty("encodingContent",photo.getEncodingContent());
+        return jsonObject.toString();
     }
 
     @PostMapping("/photo")
