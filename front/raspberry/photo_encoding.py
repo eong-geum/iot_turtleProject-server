@@ -17,7 +17,7 @@ def loadImage(file_path):
 
 
 if __name__ == "__main__":
-    image_path = "./normal.jpeg"
+    image_path = "./turtleneck.jpeg"
     src, retval, buf, jpg_as_text = loadImage(image_path)
 
     # JSON 형식으로 서버에 전달

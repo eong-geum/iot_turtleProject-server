@@ -1,5 +1,8 @@
 .idea
 .vscode
 .DS_Store
+__pycache__
 
 image/
+pose_deploy.prototxt
+pose_iter_584000.caffemodel
