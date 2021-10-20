@@ -1,9 +1,10 @@
 import base64
+from http import server
 import cv2
 import requests
 import json
-
 from requests.api import head
+
 
 
 # # image file 
@@ -40,7 +41,7 @@ src,retval,buf,jpg_as_text=loadImage('C:/Users/beomsic/Desktop/bg.jpeg')
 
 # JSON 형식으로 서버에 전달
 headers={'Content-Type':'application/json; charset=utf-8'}
-res=requests.post("http://172.10.8.60:8080/photo",json={'name':'client','encodingContent':jpg_as_text},headers=headers)
+res=requests.post("http://172.10.8.60:8081",json={'name':'client','encodingContent':jpg_as_text},headers=headers)
 
 
 
