@@ -27,8 +27,10 @@ public class PhotoApiService {
 
     // SET 인코딩한 photo data
     public void setData(PhotoDto photoDto){
-//        System.out.println("post >>>" + photoDto);
+        System.out.println("set Data >>>" + photoDto);
         photo.setName(photoDto.getName());
+        photo.setNowDate(photoDto.getNowDate());
+        photo.setNowTime(photoDto.getNowTime());
         photo.setEncodingContent(photoDto.getEncodingContent());
     }
 
@@ -46,6 +48,8 @@ public class PhotoApiService {
         // Body 설정 (JSON 형태)
         JsonObject params=new JsonObject();
         params.addProperty("name",photo.getName());
+        params.addProperty("nowDate",photo.getNowDate());
+        params.addProperty("nowTime",photo.getNowTime());
         params.addProperty("encodingContent",photo.getEncodingContent());
 
 

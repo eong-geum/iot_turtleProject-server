@@ -1,9 +1,11 @@
 import math
 import cv2
 
+is_Turtle=""
+
 def output_keypoints(image_path, proto_file, weights_file, threshold, model_name, BODY_PARTS):
     global points
-
+    
     # 이미지 읽어오기
     frame = cv2.imread(image_path)
 
@@ -104,6 +106,7 @@ def output_keypoints_with_lines(POSE_PAIRS, frame):
 
 
 def calculate_degree(point_1, point_2, frame):
+    global is_Turtle
     # 역탄젠트 구하기
     dx = point_2[0] - point_1[0]
     dy = point_2[1] - point_1[1]
@@ -115,10 +118,12 @@ def calculate_degree(point_1, point_2, frame):
     # degree 가 80'보다 작으면 거북목으로 진단
     if deg < 80:
         string = "Turtle"
+        is_Turtle="Turtle"
         cv2.putText(frame, string, (0, 25), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
         print(f"[degree] {deg} ({string})")
     else:
         string = "Normal"
+        is_Turtle="Normal"
         cv2.putText(frame, string, (0, 25), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
         print(f"[degree] {deg} ({string})")
 

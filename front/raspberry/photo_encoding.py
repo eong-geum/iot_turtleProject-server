@@ -3,6 +3,7 @@ from http import server
 import cv2
 import requests
 import json
+import datetime
 from requests.api import head
 
 
@@ -19,11 +20,14 @@ def loadImage(file_path):
 if __name__ == "__main__":
     image_path = "./turtleneck.jpeg"
     src, retval, buf, jpg_as_text = loadImage(image_path)
-
+    # 현재 시간 파악.
+    current_date=datetime.datetime.now()
+    nowDate=current_date.strftime('%Y-%m-%d')
+    nowTime=current_date.strftime('%H:%M:%S')
     # JSON 형식으로 서버에 전달
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     res = requests.post("http://localhost:8080/photo",
-                        json={'name': 'client', 'encodingContent': jpg_as_text}, headers=headers)
+                        json={'name': 'client', 'nowDate':nowDate,'nowTime':nowTime,'encodingContent': jpg_as_text}, headers=headers)
 
 
 # # 원본, 인코딩, 디코딩 이미지 화면 출력

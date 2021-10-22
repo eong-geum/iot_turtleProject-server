@@ -9,7 +9,7 @@ import cv2
 def decode_image(data):
 
     # JSON data decode
-    photo_decode = base64.b64decode(data["encodingContent"])
+    photo_decode = base64.b64decode(data)
 
     # 'image_copy.jpg' 파일로 사진 저장.
     with open('image_copy.jpg', 'wb') as f_output:
