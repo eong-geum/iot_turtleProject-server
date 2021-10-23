@@ -43,8 +43,8 @@ public class DataApiService {
         // URL 설정
         String workerIP = "localhost";
         String workerPort = "5000";
-        String method = "/opencv";
-        String url = "http://"+workerIP+":"+workerPort+method;
+        String path = "/opencv";
+        String url = "http://"+workerIP+":"+workerPort+path;
 
         // Body 설정 (JSON 형태)
         JsonObject params=new JsonObject();

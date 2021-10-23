@@ -18,6 +18,9 @@ public class FirebaseServiceImplement implements FirebaseService{
 
     public static final String COLLECTION_NAME="test";
 
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference("");
+
     @Override
     public String insertData(DataDto data) throws Exception {
         Firestore firestore= FirestoreClient.getFirestore();
@@ -41,6 +44,7 @@ public class FirebaseServiceImplement implements FirebaseService{
         else{
             return null;
         }
+
     }
 
     @Override

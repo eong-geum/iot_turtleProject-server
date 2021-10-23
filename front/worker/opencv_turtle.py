@@ -1,11 +1,12 @@
 import math
 import cv2
 
-is_Turtle=""
+is_Turtle = ""
+
 
 def output_keypoints(image_path, proto_file, weights_file, threshold, model_name, BODY_PARTS):
     global points
-    
+
     # 이미지 읽어오기
     frame = cv2.imread(image_path)
 
@@ -59,16 +60,20 @@ def output_keypoints(image_path, proto_file, weights_file, threshold, model_name
 
         if prob > threshold:  # [pointed]
             if (i == 0 or i == 1 or i == 17 or i == 18):
-                cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                cv2.putText(frame, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 1, lineType=cv2.LINE_AA)
+                cv2.circle(frame, (x, y), 5, (0, 255, 255),
+                           thickness=-1, lineType=cv2.FILLED)
+                cv2.putText(frame, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.6, (0, 0, 255), 1, lineType=cv2.LINE_AA)
 
             points.append((x, y))
             # print(f"[pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
 
         else:  # [not pointed]
             if (i == 0 or i == 1 or i == 17 or i == 18):
-                cv2.circle(frame, (x, y), 5, (0, 255, 255), thickness=-1, lineType=cv2.FILLED)
-                cv2.putText(frame, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 1, lineType=cv2.LINE_AA)
+                cv2.circle(frame, (x, y), 5, (0, 255, 255),
+                           thickness=-1, lineType=cv2.FILLED)
+                cv2.putText(frame, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.6, (255, 0, 0), 1, lineType=cv2.LINE_AA)
 
             points.append(None)
             # print(f"[not pointed] {BODY_PARTS[i]} ({i}) => prob: {prob:.5f} / x: {x} / y: {y}")
@@ -80,29 +85,32 @@ def output_keypoints_with_lines(POSE_PAIRS, frame):
     # 프레임 복사
     frame_line = frame.copy()
 
-
     # Neck 과 (LEar 또는 REar) 좌표값이 존재한다면 degree 측정
     if (points[1] is not None) and (points[18] is not None):
-        calculate_degree(point_1=points[1], point_2=points[18], frame=frame_line)
+        calculate_degree(point_1=points[1],
+                         point_2=points[18], frame=frame_line)
 
     for pair in POSE_PAIRS:
         part_a = pair[0]  # 0 (Head)
         part_b = pair[1]  # 1 (Neck)
         if points[part_a] and points[part_b]:
-            print(f"[linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
+            print(
+                f"[linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
             # Neck 과 Ear 이라면 분홍색 선
             if (part_a == 1 and part_b == 18) or (part_a == 1 and part_b == 17):
-                cv2.line(frame, points[part_a], points[part_b], (255, 0, 255), 3)
+                cv2.line(frame, points[part_a],
+                         points[part_b], (255, 0, 255), 3)
             else:  # 노란색 선
                 cv2.line(frame, points[part_a], points[part_b], (0, 255, 0), 3)
         else:
-            print(f"[not linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
+            print(
+                f"[not linked] {part_a} {points[part_a]} <=> {part_b} {points[part_b]}")
 
     # 포인팅 되어있는 프레임과 라인까지 연결된 프레임을 가로로 연결
-    frame_horizontal = cv2.hconcat([frame, frame_line])
-    cv2.imshow("Output_Keypoints_With_Lines", frame_horizontal)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #frame_horizontal = cv2.hconcat([frame, frame_line])
+    #cv2.imshow("Output_Keypoints_With_Lines", frame_horizontal)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 
 def calculate_degree(point_1, point_2, frame):
@@ -118,13 +126,15 @@ def calculate_degree(point_1, point_2, frame):
     # degree 가 80'보다 작으면 거북목으로 진단
     if deg < 80:
         string = "Turtle"
-        is_Turtle="Turtle"
-        cv2.putText(frame, string, (0, 25), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
+        is_Turtle = "Turtle"
+        cv2.putText(frame, string, (0, 25),
+                    cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
         print(f"[degree] {deg} ({string})")
     else:
         string = "Normal"
-        is_Turtle="Normal"
-        cv2.putText(frame, string, (0, 25), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
+        is_Turtle = "Normal"
+        cv2.putText(frame, string, (0, 25),
+                    cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255))
         print(f"[degree] {deg} ({string})")
 
 

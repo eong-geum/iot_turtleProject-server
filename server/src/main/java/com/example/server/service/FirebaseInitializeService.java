@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileInputStream;
 
 @Service
@@ -15,12 +16,13 @@ public class FirebaseInitializeService {
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream serviceAccount=
-                    new FileInputStream("C:/Users/beomsic/Desktop/프로젝트/iot_turtleProject-server/server/src/main/resources/turtleproject-2021-firebase-adminsdk-9tj4v-cb784ae11d.json");
-            FirebaseOptions options=new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://turtleproject-2021-default-rtdb.firebaseio.com")
+            FileInputStream refreshToken = new FileInputStream("./src/main/resources/turtleproject-2021-firebase-adminsdk-9tj4v-4d6deda7cb.json");
+
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(refreshToken))
+                    .setDatabaseUrl("https://turtleproject-2021-default-rtdb.firebaseio.com/")
                     .build();
+
             FirebaseApp.initializeApp(options);
         }
         catch (Exception e){

@@ -43,7 +43,7 @@ public class DataApi {
 
         // is it a turtle-neck?
         String isTurtle = dataApiService.getResult();
-
+        System.out.println("isTurtle = " + isTurtle);
         if(isTurtle=="Turtle")
         {
 //            String database=firebaseController.insertData(data);
