@@ -26,8 +26,8 @@ if __name__ == "__main__":
     nowTime=current_date.strftime('%H:%M:%S')
     # JSON 형식으로 서버에 전달
     headers = {'Content-Type': 'application/json; charset=utf-8'}
-    res = requests.post("http://localhost:8080/photo",
-                        json={'name': 'client', 'nowDate':nowDate,'nowTime':nowTime,'encodingContent': jpg_as_text}, headers=headers)
+    res = requests.post("http://localhost:8080/data",
+                        json={'id':"1",'name': 'client', 'nowDate':nowDate,'nowTime':nowTime,'encodingContent': jpg_as_text}, headers=headers)
 
 
 # # 원본, 인코딩, 디코딩 이미지 화면 출력

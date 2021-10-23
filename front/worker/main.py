@@ -36,7 +36,14 @@ def opencv():
     # 보통 : Normal
     is_Turtle=opencv_turtle.is_Turtle
 
-    response = Response(status=200)
+    result={'id':"1",'user_name':user_name,'now_Date':now_Date,'now_Time':now_Time,'is_turtle':is_Turtle}
+
+    # JSON 형태로 return 
+    response=app.response_class(
+        response=json.dumps(result),
+        status=200,
+        mimetype='application/json'
+    )
     return response
 
 
