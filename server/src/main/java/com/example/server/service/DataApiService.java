@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.dto.DataDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -8,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -48,9 +52,9 @@ public class DataApiService {
 
         // Body 설정 (JSON 형태)
         JsonObject params=new JsonObject();
-        params.addProperty("name",data.getName());
-        params.addProperty("nowDate",data.getNowDate());
-        params.addProperty("nowTime",data.getNowTime());
+        //params.addProperty("name",data.getName());
+        //params.addProperty("nowDate",data.getNowDate());
+        //params.addProperty("nowTime",data.getNowTime());
         params.addProperty("encodingContent",data.getEncodingContent());
 
 
@@ -69,27 +73,23 @@ public class DataApiService {
                 entity,
                 String.class
         );
-
+        //System.out.println("response.getBody() = " + response.getBody());
 
         JsonParser jsonParser=new JsonParser();
-        JsonObject jsonObject=(JsonObject) jsonParser.parse(response.getBody().toString());
-
-
-        System.out.println("response = " + response.getBody());
+        JsonObject jsonObject=(JsonObject) jsonParser.parse(response.getBody()).getAsJsonObject();
 //        System.out.println("json = "+ jsonObject);
 
 //        String id=jsonObject.get("id").toString();
 //        String name=jsonObject.get("user_name").toString();
 //        String nowData=jsonObject.get("now_Date").toString();
 //        String nowTime=jsonObject.get("now_Time").toString();
-        String is_turtle=jsonObject.get("is_turtle").toString();
+        String is_turtle=jsonObject.get("is_turtle").getAsString();
 
 //        System.out.println("id : "+id);
 //        System.out.println("name : "+name);
 //        System.out.println("nowData : "+nowData);
 //        System.out.println("nowTime : "+nowTime);
         System.out.println("is_turtle : "+is_turtle);
-
         result=is_turtle;
 
         return result;

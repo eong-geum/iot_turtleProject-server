@@ -3,13 +3,14 @@ package com.example.server.service;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 
-@Service
+@Configuration
 // Firebase에 접속하기 위한 설정 파일
 public class FirebaseInitializeService {
 

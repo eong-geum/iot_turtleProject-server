@@ -24,9 +24,9 @@ def opencv():
     data = request.get_json()
 
     # Datebase에 저장할 내용들
-    user_name = data['name']
-    now_Date = data['nowDate']
-    now_Time = data['nowTime']
+    #user_name = data['name']
+    #now_Date = data['nowDate']
+    #now_Time = data['nowTime']
 
     # make image file
     photo_decoding.decode_image(data['encodingContent'])
@@ -37,12 +37,13 @@ def opencv():
     # 거북목 : Turtle
     # 보통 : Normal
     is_Turtle = opencv_turtle.is_Turtle
+    print("is_Turtle : ", is_Turtle)
     # 사진 사용 후 사진 삭제
     os.remove("image_copy.jpg")
 
-    result = {'id': "1", 'user_name': user_name, 'now_Date': now_Date,
-              'now_Time': now_Time, 'is_turtle': is_Turtle}
-
+    # result = {'id': "1", 'user_name': user_name, 'now_Date': now_Date,
+    #         'now_Time': now_Time, 'is_turtle': is_Turtle}
+    result = {'is_turtle': is_Turtle}
     # JSON 형태로 return
     response = app.response_class(
         response=json.dumps(result),

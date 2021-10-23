@@ -15,7 +15,7 @@ public class DataApi {
     @Autowired
     FirebaseService firebaseService;
 
-    private final DataApiService dataApiService;
+    private final DataApiService dataApiService = new DataApiService();
 //    private final FirebaseController firebaseController;
 
     private DataDto data=new DataDto();
@@ -31,6 +31,10 @@ public class DataApi {
 //        return jsonObject.toString();
     }
 
+    public DataApi() {
+        super();
+    }
+
     //raspberryPI photo encoding -> spring loadbalancer -> opencv worker
     @PostMapping("/data")
     public void postData(@RequestBody DataDto photoDto) throws Exception {
@@ -43,8 +47,7 @@ public class DataApi {
 
         // is it a turtle-neck?
         String isTurtle = dataApiService.getResult();
-        System.out.println("isTurtle = " + isTurtle);
-        if(isTurtle=="Turtle")
+        if(isTurtle.equals("Turtle"))
         {
 //            String database=firebaseController.insertData(data);
             String insertResult=firebaseService.insertData(data);
