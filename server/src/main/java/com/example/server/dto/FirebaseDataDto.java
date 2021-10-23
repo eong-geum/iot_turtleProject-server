@@ -9,8 +9,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FirebaseDataDto {
-    String id;
-    int count;
-    String name;
-    String date;
+    private String id;
+    private int count;
+    private String name;
+    private String date;
+    private String encodingContent;
 }
