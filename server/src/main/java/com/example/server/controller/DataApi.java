@@ -44,12 +44,10 @@ public class DataApi {
         // set encoding data
         data=dataApiService.setData(photoDto);
 
-
         // is it a turtle-neck?
         String isTurtle = dataApiService.getResult();
         if(isTurtle.equals("Turtle"))
         {
-//            String database=firebaseController.insertData(data);
             String insertResult=firebaseService.insertData(data);
             System.out.println("insert : "+insertResult);
         }

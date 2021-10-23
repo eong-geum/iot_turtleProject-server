@@ -30,16 +30,15 @@ public class DataApiService {
 
     // SET 인코딩한 photo data
     public DataDto setData(DataDto dataDto){
-        System.out.println("set Data >>>" + dataDto);
+        System.out.println("set Data >>> " + dataDto);
         data.setId(dataDto.getId());
         data.setName(dataDto.getName());
         data.setNowDate(dataDto.getNowDate());
-        data.setNowTime(dataDto.getNowTime());
         data.setEncodingContent(dataDto.getEncodingContent());
         return data;
     }
 
-    // python 으로 POST
+    // python 으로 사진만 POST
     public String getResult()  {
         // result
         String result="turtle";
@@ -77,19 +76,10 @@ public class DataApiService {
 
         JsonParser jsonParser=new JsonParser();
         JsonObject jsonObject=(JsonObject) jsonParser.parse(response.getBody()).getAsJsonObject();
-//        System.out.println("json = "+ jsonObject);
 
-//        String id=jsonObject.get("id").toString();
-//        String name=jsonObject.get("user_name").toString();
-//        String nowData=jsonObject.get("now_Date").toString();
-//        String nowTime=jsonObject.get("now_Time").toString();
         String is_turtle=jsonObject.get("is_turtle").getAsString();
 
-//        System.out.println("id : "+id);
-//        System.out.println("name : "+name);
-//        System.out.println("nowData : "+nowData);
-//        System.out.println("nowTime : "+nowTime);
-        System.out.println("is_turtle : "+is_turtle);
+        System.out.println(data.getId() + " is_turtle : "+is_turtle);
         result=is_turtle;
 
         return result;
