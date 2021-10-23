@@ -2,9 +2,26 @@ package com.example.server.service;
 
 import com.example.server.dto.DataDto;
 import com.example.server.dto.FirebaseDataDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.database.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 @Service
@@ -14,6 +31,36 @@ public class FirebaseServiceImplement implements FirebaseService{
     private DatabaseReference ref;
     private String currentSnapshot;
 
+    // one instance, reuse
+    private final CloseableHttpClient httpClient = HttpClients.createDefault();
+    //objectMapper
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    public int getCount(String id) throws Exception {
+
+        int ret = 0;
+
+        HttpGet request = new HttpGet("https://turtleproject-2021-default-rtdb.firebaseio.com/users/" + id + ".json");
+
+        try (CloseableHttpResponse response = httpClient.execute(request)){
+
+            System.out.println("StatusCode = " + response.getStatusLine().toString());
+            HttpEntity entity = response.getEntity();
+            String body = EntityUtils.toString(entity);
+            if(body.equals("null")){// 회원이 없는 경우
+                System.out.println("새로운 회원");
+                ret = 0;
+            }
+            else{
+                System.out.println("회원 존재");
+                FirebaseDataDto firebaseDataDto = objectMapper.readValue(body, FirebaseDataDto.class);
+                ret = firebaseDataDto.getCount();
+
+            }
+
+        }
+        return ret;
+    }
 
     // firebase에 유저 데이터 insert, update
     @Override
@@ -29,7 +76,7 @@ public class FirebaseServiceImplement implements FirebaseService{
         String nowDate = data.getNowDate();
 
         //firebase에 있는 count 정보 가져오기 (REST API GET으로 가져올 예정)
-        int count = 0;
+        int count = getCount(id);
 
 //        FirebaseDatabase database = newUserRef.getDatabase();
 //        System.out.println("database = " + database);
@@ -37,7 +84,7 @@ public class FirebaseServiceImplement implements FirebaseService{
 
         DatabaseReference newRef = ref.child(id);
         //회원 정보 초기화
-        FirebaseDataDto firebaseDataDto = new FirebaseDataDto(id,count,name,nowDate, encodingContent);
+        FirebaseDataDto firebaseDataDto = new FirebaseDataDto(id,count+1,name,nowDate, encodingContent);
 
         //회원 추가
         newRef.setValueAsync(firebaseDataDto);
