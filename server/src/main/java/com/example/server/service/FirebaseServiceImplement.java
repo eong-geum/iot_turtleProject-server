@@ -36,6 +36,7 @@ public class FirebaseServiceImplement implements FirebaseService{
     //objectMapper
     ObjectMapper objectMapper = new ObjectMapper();
 
+    // 현재 저장된 count 가져오고, 만약 날짜가 바뀌었다면 /count에 count 저장 후 0으로 초기화
     public int getCount(String id) throws Exception {
 
         int ret = 0;
@@ -74,6 +75,7 @@ public class FirebaseServiceImplement implements FirebaseService{
         String name = data.getName();
         String encodingContent = data.getEncodingContent();
         String nowDate = data.getNowDate();
+        String nowTime = data.getNowTime();
 
         //firebase에 있는 count 정보 가져오기 (REST API GET으로 가져올 예정)
         int count = getCount(id);
@@ -84,7 +86,7 @@ public class FirebaseServiceImplement implements FirebaseService{
 
         DatabaseReference newRef = ref.child(id);
         //회원 정보 초기화
-        FirebaseDataDto firebaseDataDto = new FirebaseDataDto(id,count+1,name,nowDate, encodingContent);
+        FirebaseDataDto firebaseDataDto = new FirebaseDataDto(id,count+1,name,nowDate,nowTime, encodingContent);
 
         //회원 추가
         newRef.setValueAsync(firebaseDataDto);

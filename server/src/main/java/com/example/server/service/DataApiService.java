@@ -34,6 +34,7 @@ public class DataApiService {
         data.setId(dataDto.getId());
         data.setName(dataDto.getName());
         data.setNowDate(dataDto.getNowDate());
+        data.setNowTime(dataDto.getNowTime());
         data.setEncodingContent(dataDto.getEncodingContent());
         return data;
     }

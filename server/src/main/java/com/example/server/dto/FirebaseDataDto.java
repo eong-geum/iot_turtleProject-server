@@ -13,5 +13,6 @@ public class FirebaseDataDto {
     private int count;
     private String name;
     private String date;
+    private String time;
     private String encodingContent;
 }
