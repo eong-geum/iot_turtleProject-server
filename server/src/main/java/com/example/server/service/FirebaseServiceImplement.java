@@ -38,7 +38,8 @@ public class FirebaseServiceImplement implements FirebaseService{
     ObjectMapper objectMapper = new ObjectMapper();
 
     // 현재 저장된 count 가져오고, 만약 날짜가 바뀌었다면 /count에 count 저장 후 0으로 초기화
-    public int getCount(String id) throws Exception {
+    // 날이 바뀐 경우 count를 0부터 다시 세야함
+    public int getCount(String id, String nowDate) throws Exception {
 
         int ret = 0;
 
@@ -51,17 +52,27 @@ public class FirebaseServiceImplement implements FirebaseService{
             HttpEntity entity = response.getEntity();
             String body = EntityUtils.toString(entity);
             if(body.equals("null")){// 회원이 없는 경우
-                System.out.println("새로운 회원");
+                System.out.println("새로운 회원 추가");
                 ret = 0;
             }
             else{
-                System.out.println("회원 존재");
+                System.out.println("이미 존재하는 회원 업데이트");
                 FirebaseDataDto firebaseDataDto = objectMapper.readValue(body, FirebaseDataDto.class);
-                ret = firebaseDataDto.getCount();
 
+                String databaseDate = firebaseDataDto.getDate();
+
+                if(databaseDate.equals(nowDate)){
+                    //날짜가 바뀌지 않음
+                    ret = firebaseDataDto.getCount();
+                }
+                else {
+                    //날짜가 바뀌었으니 count를 0부터 다시 셈
+                    ret = 0;
+                }
             }
 
-        }
+        }catch (Exception e){}
+
         return ret;
     }
 
@@ -105,11 +116,12 @@ public class FirebaseServiceImplement implements FirebaseService{
         String id = data.getId();
         String name = data.getName();
         String encodingContent = data.getEncodingContent();
-        String nowDate = data.getNowDate();
+        String nowDate = data.getNowDate(); //오늘 날짜
         String nowTime = data.getNowTime();
 
-        //firebase에 있는 count 정보 가져오기 (REST API GET으로 가져올 예정)
-        int count = getCount(id);
+        // firebase에 있는 count 정보 가져오기 (REST API GET으로 가져올 예정)
+        // 날짜가 바뀐 경우 count를 0부터 다시 세야한다.
+        int count = getCount(id, nowDate);
 
         //newRef = [firebase]/users/{id}
         DatabaseReference newRef = ref.child(id);

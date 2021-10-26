@@ -49,7 +49,7 @@ public class DataApi {
         if(isTurtle.equals("Turtle"))
         {
             String insertResult=firebaseService.insertData(data);
-            System.out.println("insert : "+insertResult);
+            //System.out.println("insert : "+insertResult);
         }
 
         /*

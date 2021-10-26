@@ -32,9 +32,10 @@ if __name__ == "__main__":
     res = requests.post("http://localhost:8080/data",
                         json={
                             'id': id,
+                            # 'id': "kangho",
                             'name': name,
-                            # 'nowDate': nowDate,
-                            'nowDate': "2021-10-27",
+                            'nowDate': nowDate,
+                            # 'nowDate': "2021-10-27",
                             'nowTime': nowTime,
                             'encodingContent': jpg_as_text
                         },
