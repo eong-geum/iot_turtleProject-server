@@ -43,12 +43,11 @@ public class FirebaseServiceImplement implements FirebaseService{
 
         int ret = 0;
 
-        System.out.println("=== POST request send to Firebase ===");
         HttpGet request = new HttpGet("https://turtleproject-2021-default-rtdb.firebaseio.com/users/" + id + ".json");
 
         try (CloseableHttpResponse response = httpClient.execute(request)){
 
-            System.out.println("StatusCode = " + response.getStatusLine().toString());
+            System.out.println("=== POST request send to Firebase : "+ response.getStatusLine().toString() + " ===");
             HttpEntity entity = response.getEntity();
             String body = EntityUtils.toString(entity);
             if(body.equals("null")){// 회원이 없는 경우
@@ -71,13 +70,15 @@ public class FirebaseServiceImplement implements FirebaseService{
                 }
             }
 
-        }catch (Exception e){}
+        }catch (Exception e){
+            System.out.println("Exception = " + e);
+        }
 
         return ret;
     }
 
     public void updateCount(DatabaseReference ref){
-        System.out.println("ref = " + ref);
+        System.out.println("접근 DB URL = " + ref);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
