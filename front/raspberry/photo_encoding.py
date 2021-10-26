@@ -33,7 +33,8 @@ if __name__ == "__main__":
                         json={
                             'id': id,
                             'name': name,
-                            'nowDate': nowDate,
+                            # 'nowDate': nowDate,
+                            'nowDate': "2021-10-27",
                             'nowTime': nowTime,
                             'encodingContent': jpg_as_text
                         },

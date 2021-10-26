@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.dto.DataDto;
+import com.example.server.dto.FirebaseCountDto;
 import com.example.server.dto.FirebaseDataDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.database.*;
@@ -41,6 +42,7 @@ public class FirebaseServiceImplement implements FirebaseService{
 
         int ret = 0;
 
+        System.out.println("=== POST request send to Firebase ===");
         HttpGet request = new HttpGet("https://turtleproject-2021-default-rtdb.firebaseio.com/users/" + id + ".json");
 
         try (CloseableHttpResponse response = httpClient.execute(request)){
@@ -63,7 +65,36 @@ public class FirebaseServiceImplement implements FirebaseService{
         return ret;
     }
 
-    // firebase에 유저 데이터 insert, update
+    public void updateCount(DatabaseReference ref){
+        System.out.println("ref = " + ref);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                // id, date, count 가져오기
+                FirebaseDataDto value = snapshot.getValue(FirebaseDataDto.class);
+                int count1 = value.getCount();
+                String id1 = value.getId();
+                String date = value.getDate();
+
+                DatabaseReference countRef = database.getReference("count");
+                countRef = countRef.child(id1);
+                countRef = countRef.child(date);
+
+                FirebaseCountDto data = new FirebaseCountDto(count1);
+
+                countRef.setValueAsync(data);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+    }
+
+    // 거북목이 감지되었을 때, firebase에 유저 데이터 insert, update
     @Override
     public String insertData(DataDto data) throws Exception {
         database = FirebaseDatabase.getInstance();
@@ -80,28 +111,24 @@ public class FirebaseServiceImplement implements FirebaseService{
         //firebase에 있는 count 정보 가져오기 (REST API GET으로 가져올 예정)
         int count = getCount(id);
 
-//        FirebaseDatabase database = newUserRef.getDatabase();
-//        System.out.println("database = " + database);
-
-
+        //newRef = [firebase]/users/{id}
         DatabaseReference newRef = ref.child(id);
+
         //회원 정보 초기화
         FirebaseDataDto firebaseDataDto = new FirebaseDataDto(id,count+1,name,nowDate,nowTime, encodingContent);
 
         //회원 추가
         newRef.setValueAsync(firebaseDataDto);
 
+        // 해당 회원의 {날짜 : count} firebase 업데이트
+        updateCount(newRef);
+
+
         return id;
     }
 
     @Override
     public DataDto selectData(String id) throws Exception {
-        database = FirebaseDatabase.getInstance();
-        //System.out.println(database.getReference());
-        ref = database.getReference("users");
-
-        DatabaseReference newref = ref.child(id);
-
         return null;
     }
 

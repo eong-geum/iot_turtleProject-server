@@ -39,7 +39,7 @@ public class DataApi {
     @PostMapping("/data")
     public void postData(@RequestBody DataDto photoDto) throws Exception {
 
-        System.out.println("POST API");
+        System.out.println("\n==== POST Request Received from raspberry PI : /data ====");
         // POST - raspberryPI photo encoding data
         // set encoding data
         data=dataApiService.setData(photoDto);
