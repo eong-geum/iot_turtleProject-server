@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.json.Json;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
@@ -94,16 +91,40 @@ public class FirebaseCloudMessageService {
 ////    public String pushMessage(Message message) throws FirebaseMessagingException {
 ////        return instance.send(message);
 ////    }
-    public void sendMessage(String token,String title,String body) throws FirebaseMessagingException {
-        Notification notification=Notification.builder().setTitle(title).setBody(body).build();
-        Message message= Message.builder()
-                .putData("title",title)
-                .putData("body",body)
-                .setToken(token)
+
+
+//    public void sendMessage(String token,String title,String body) throws FirebaseMessagingException {
+//        Notification notification=Notification.builder().setTitle(title).setBody(body).build();
+//        Message message= Message.builder()
+//                .putData("title",title)
+//                .putData("body",body)
+//                .setToken(token)
+//                .setNotification(notification)
+//                .build();
+//
+//        String response = FirebaseMessaging.getInstance().send(message);
+//
+//        System.out.println("=====Notification====="+response);
+//    }
+
+    public void sendMessage(String token,String title,String body) throws FirebaseMessagingException{
+
+        String imageUrl="https://image.tmdb.org/t/p/w300/670x9sf0Ru8y6ezBggmYudx61yB.jpg";
+        Aps aps= Aps.builder().setSound("default").build();
+        ApnsFcmOptions apnsFcmOptions = ApnsFcmOptions.builder().setImage(imageUrl).build();
+        ApnsConfig apnsConfig= ApnsConfig.builder().setAps(aps).setFcmOptions(apnsFcmOptions).build();
+        Notification notification=Notification.builder().setTitle(title).setBody(body).setBody(imageUrl).build();
+
+        String registrationToken = token;
+        Message message=Message.builder()
+                .setToken(registrationToken)
+                .setApnsConfig(apnsConfig)
                 .setNotification(notification)
                 .build();
 
         String response = FirebaseMessaging.getInstance().send(message);
+
+//        String response = FirebaseMessaging.getInstance().send(message);
 
         System.out.println("=====Notification====="+response);
     }
