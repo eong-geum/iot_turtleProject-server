@@ -23,9 +23,8 @@ import java.net.http.HttpRequest;
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
 
-    public void sendMessage(String token,String title,String body) throws FirebaseMessagingException{
+    public void sendMessage(String token,String title,String body, String imageUrl) throws FirebaseMessagingException{
 
-        String imageUrl="https://image.tmdb.org/t/p/w300/670x9sf0Ru8y6ezBggmYudx61yB.jpg";
         Aps aps= Aps.builder().setSound("default").build();
         ApnsFcmOptions apnsFcmOptions = ApnsFcmOptions.builder().setImage(imageUrl).build();
         ApnsConfig apnsConfig= ApnsConfig.builder().setAps(aps).setFcmOptions(apnsFcmOptions).build();

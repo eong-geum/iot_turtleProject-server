@@ -56,10 +56,11 @@ public class DataApi {
         String isTurtle = dataApiService.getResult();
         if(isTurtle.equals("Turtle"))
         {
-            firebaseStorageService.uploadImage(photoDto.encodingContent);
-            /*firebaseCloudMessageService.sendMessage(
+            String uri =firebaseStorageService.uploadImage(photoDto.encodingContent);
+            String imageUrl = "https://firebasestorage.googleapis.com/v0/b/turtleproject-2021.appspot.com/o/"+uri+"?alt=media";
+            firebaseCloudMessageService.sendMessage(
                     "dQ75ycug00dpjeDL7Pk_XS:APA91bE748YQq7-USBd_qJptpaG6Mn52Nqy20w82ROWhfi3nhCY1lZcMe1Zxz3MRk7Xq-Bd3uoa5M_rYgypCcRTQZUO866PktzkbfydrIm_okqzSS0pASsxjxZxYJHMXfdDMei-lXbGX",
-                    "안녕하세요! ","test 입니다.");*/
+                    "안녕하세요! ","test 입니다.", imageUrl);
             String insertResult=firebaseService.insertData(data);
             //System.out.println("insert : "+insertResult);
         }

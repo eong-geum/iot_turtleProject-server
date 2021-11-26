@@ -16,15 +16,16 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class FirebaseStorageService {
 
-    public void uploadImage(String encodedImage){
-        StorageClient storageClient = StorageClient.getInstance(FirebaseApp.getInstance());
-        Bucket bucket = storageClient.bucket();
-        System.out.println("bucket = " + bucket);
-        Storage storage = bucket.getStorage();
-        System.out.println("storage = " + storage);
-        String blob_name = "my-blob-name";
+    public String uploadImage(String encodedImage){
+        Bucket bucket = StorageClient.getInstance(FirebaseApp.getInstance()).bucket();
+        String blob_name = "my-blob-name"; //파일 이름
         Blob blob = bucket.create(blob_name, Base64.getDecoder().decode(encodedImage), "image/jpeg");
 
+        Blob blob1 = bucket.get(blob_name);
+        System.out.println("blob1 = " + blob1);
+
         System.out.println("blob = " + blob);
+
+        return blob_name;
     }
 }
