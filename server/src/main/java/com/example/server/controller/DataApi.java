@@ -4,6 +4,7 @@ import com.example.server.dto.DataDto;
 import com.example.server.service.DataApiService;
 import com.example.server.service.FirebaseCloudMessageService;
 import com.example.server.service.FirebaseService;
+import com.example.server.service.FirebaseStorageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class DataApi {
 
     @Autowired
     FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Autowired
+    FirebaseStorageService firebaseStorageService;
 
     private final DataApiService dataApiService = new DataApiService();
 //    private final FirebaseController firebaseController;
@@ -52,9 +56,10 @@ public class DataApi {
         String isTurtle = dataApiService.getResult();
         if(isTurtle.equals("Turtle"))
         {
-            firebaseCloudMessageService.sendMessage(
+            firebaseStorageService.uploadImage(photoDto.encodingContent);
+            /*firebaseCloudMessageService.sendMessage(
                     "dQ75ycug00dpjeDL7Pk_XS:APA91bE748YQq7-USBd_qJptpaG6Mn52Nqy20w82ROWhfi3nhCY1lZcMe1Zxz3MRk7Xq-Bd3uoa5M_rYgypCcRTQZUO866PktzkbfydrIm_okqzSS0pASsxjxZxYJHMXfdDMei-lXbGX",
-                    "안녕하세요! ","test 입니다.");
+                    "안녕하세요! ","test 입니다.");*/
             String insertResult=firebaseService.insertData(data);
             //System.out.println("insert : "+insertResult);
         }
