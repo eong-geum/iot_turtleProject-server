@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class FirebaseStorageService {
         Storage storage = bucket.getStorage();
         System.out.println("storage = " + storage);
         String blob_name = "my-blob-name";
-        Blob blob = bucket.create(blob_name, encodedImage.getBytes(StandardCharsets.UTF_8), "image/jpeg");
+        Blob blob = bucket.create(blob_name, Base64.getDecoder().decode(encodedImage), "image/jpeg");
 
         System.out.println("blob = " + blob);
     }
