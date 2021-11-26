@@ -9,6 +9,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @Data
 public class DataApi {
@@ -50,11 +53,18 @@ public class DataApi {
 
         // is it a turtle-neck?
         String isTurtle = dataApiService.getResult();
+        List<String> registrationTokens = Arrays.asList(
+                "dQ75ycug00dpjeDL7Pk_XS:APA91bE748YQq7-USBd_qJptpaG6Mn52Nqy20w82ROWhfi3nhCY1lZcMe1Zxz3MRk7Xq-Bd3uoa5M_rYgypCcRTQZUO866PktzkbfydrIm_okqzSS0pASsxjxZxYJHMXfdDMei-lXbGX",
+                "cUG5VVCM—g3fTA4WuV_F7:APA91bEIBiSqcpLw6EZ72Xwmrwg83YEIybuzzYGDg2Ans3QL6izK77awbGE6UnzHzLYUv5xz1kvoP-3098SmRtXch131L9UfEoCYuusp9tynzwT__RI7unDr9HeeDQ2fhgEWdoB-2TA7"
+        );
+        String imageUrl="https://image.tmdb.org/t/p/w300/670x9sf0Ru8y6ezBggmYudx61yB.jpg";
         if(isTurtle.equals("Turtle"))
         {
+//
+//            cUG5VVCM—g3fTA4WuV_F7:APA91bEIBiSqcpLw6EZ72Xwmrwg83YEIybuzzYGDg2Ans3QL6izK77awbGE6UnzHzLYUv5xz1kvoP-3098SmRtXch131L9UfEoCYuusp9tynzwT__RI7unDr9HeeDQ2fhgEWdoB-2TA7
             firebaseCloudMessageService.sendMessage(
-                    "dQ75ycug00dpjeDL7Pk_XS:APA91bE748YQq7-USBd_qJptpaG6Mn52Nqy20w82ROWhfi3nhCY1lZcMe1Zxz3MRk7Xq-Bd3uoa5M_rYgypCcRTQZUO866PktzkbfydrIm_okqzSS0pASsxjxZxYJHMXfdDMei-lXbGX",
-                    "안녕하세요! ","test 입니다.");
+                    registrationTokens,
+                    "안녕하세요! ","test 입니다.",imageUrl);
             String insertResult=firebaseService.insertData(data);
             //System.out.println("insert : "+insertResult);
         }

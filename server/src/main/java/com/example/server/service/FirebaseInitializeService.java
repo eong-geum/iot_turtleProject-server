@@ -17,7 +17,7 @@ public class FirebaseInitializeService {
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream refreshToken = new FileInputStream("./src/main/resources/turtleproject-2021-firebase-adminsdk-9tj4v-cb784ae11d.json");
+            FileInputStream refreshToken = new FileInputStream("./src/main/resources/turtleproject-2021-firebase-adminsdk-9tj4v-67c760c382.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(refreshToken))
