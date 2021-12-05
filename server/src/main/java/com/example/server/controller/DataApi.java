@@ -4,6 +4,7 @@ import com.example.server.dto.DataDto;
 import com.example.server.service.DataApiService;
 import com.example.server.service.FirebaseCloudMessageService;
 import com.example.server.service.FirebaseService;
+import com.example.server.service.FirebaseStorageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class DataApi {
 
     @Autowired
     FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Autowired
+    FirebaseStorageService firebaseStorageService;
 
     private final DataApiService dataApiService = new DataApiService();
 //    private final FirebaseController firebaseController;
@@ -60,11 +64,11 @@ public class DataApi {
         String imageUrl="https://image.tmdb.org/t/p/w300/670x9sf0Ru8y6ezBggmYudx61yB.jpg";
         if(isTurtle.equals("Turtle"))
         {
-//
-//            cUG5VVCM—g3fTA4WuV_F7:APA91bEIBiSqcpLw6EZ72Xwmrwg83YEIybuzzYGDg2Ans3QL6izK77awbGE6UnzHzLYUv5xz1kvoP-3098SmRtXch131L9UfEoCYuusp9tynzwT__RI7unDr9HeeDQ2fhgEWdoB-2TA7
+            String uri =firebaseStorageService.uploadImage(photoDto.encodingContent);
+            String imageUrl = "https://firebasestorage.googleapis.com/v0/b/turtleproject-2021.appspot.com/o/"+uri+"?alt=media";
             firebaseCloudMessageService.sendMessage(
-                    registrationTokens,
-                    "안녕하세요! ","test 입니다.",imageUrl);
+                    "dQ75ycug00dpjeDL7Pk_XS:APA91bE748YQq7-USBd_qJptpaG6Mn52Nqy20w82ROWhfi3nhCY1lZcMe1Zxz3MRk7Xq-Bd3uoa5M_rYgypCcRTQZUO866PktzkbfydrIm_okqzSS0pASsxjxZxYJHMXfdDMei-lXbGX",
+                    "안녕하세요! ","test 입니다.", imageUrl);
             String insertResult=firebaseService.insertData(data);
             //System.out.println("insert : "+insertResult);
         }

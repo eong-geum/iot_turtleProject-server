@@ -24,8 +24,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
-    private final String url="https://fcm.googleapis.com/vi/projects/turtleproject-2021/fcm/send";
-    private final ObjectMapper objectMapper;
 
     public void sendMessage(List<String> registrationTokens, String title, String body, String imageUrl) throws FirebaseMessagingException{
 
