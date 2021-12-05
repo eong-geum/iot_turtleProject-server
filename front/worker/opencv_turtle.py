@@ -89,6 +89,9 @@ def output_keypoints_with_lines(POSE_PAIRS, frame):
     if (points[1] is not None) and (points[18] is not None):
         calculate_degree(point_1=points[1],
                          point_2=points[18], frame=frame_line)
+    elif(points[1] is not None) and (points[17] is not None):
+        calculate_degree(point_1=points[1],
+                         point_2=points[17], frame=frame_line)
 
     for pair in POSE_PAIRS:
         part_a = pair[0]  # 0 (Head)
