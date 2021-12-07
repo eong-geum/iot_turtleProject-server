@@ -31,7 +31,7 @@ public class DataApiService {
 
 	// SET 인코딩한 photo data
 	public DataDto setData(DataDto dataDto) {
-		System.out.println("set Data >>> " + dataDto);
+		System.out.println("set Data >>> " + dataDto.name);
 		data.setId(dataDto.getId());
 		data.setName(dataDto.getName());
 		data.setNowDate(dataDto.getNowDate());
@@ -46,7 +46,7 @@ public class DataApiService {
 		String result = "turtle";
 
 		// URL 설정
-		String workerIP = "localhost";
+		String workerIP = "worker";
 		String workerPort = "5000";
 		String path = "/opencv";
 		String url = "http://" + workerIP + ":" + workerPort + path;

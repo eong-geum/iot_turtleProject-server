@@ -28,20 +28,13 @@ public class FirebaseCloudMessageService {
 
 		ApnsFcmOptions apnsFcmOptions = ApnsFcmOptions.builder().setImage(imageUrl).build();
 		ApnsConfig apnsConfig = ApnsConfig.builder().setFcmOptions(apnsFcmOptions).setAps(aps).build();
-		Notification notification = Notification.builder().setTitle(title).setBody(body).build();
+		Notification notification = Notification.builder().setTitle(title).setBody(body).setImage(imageUrl).build();
 
 		MulticastMessage message = MulticastMessage.builder()
 			.addAllTokens(registrationTokens)
 			.setApnsConfig(apnsConfig)
 			.setNotification(notification)
 			.build();
-
-		//        String registrationToken = token;
-		//        Message message=Message.builder()
-		//                .setToken(registrationToken)
-		//                .setApnsConfig(apnsConfig)
-		//                .setNotification(notification)
-		//                .build();
 
 		BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
 		if (response.getFailureCount() > 0) {

@@ -18,8 +18,8 @@ def loadImage(file_path):
 
 
 if __name__ == "__main__":
-    id = "beomsic"
-    name = "Beomseok"
+    id = "docker"
+    name = "docker"
     image_path = "./turtleneck.jpeg"
     src, retval, buf, jpg_as_text = loadImage(image_path)
     # 현재 시간 파악.
