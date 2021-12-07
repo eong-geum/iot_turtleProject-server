@@ -8,6 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class PushMessage {
-    private String title;
-    private String body;
+	private String title;
+	private String body;
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class FirebaseCountDto {
-    private int count;
+	private int count;
 }
