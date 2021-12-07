@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-server
+  labels:
+    app: spring-server
+spec:
+  ports:
+    - name: spring-server
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: spring-server
+  type: NodePort

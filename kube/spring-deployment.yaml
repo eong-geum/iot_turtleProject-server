@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-server
+  labels:
+    app: spring-server
+spec:
+  replicas: 1 #pod의 개수
+  selector:
+    matchLabels:
+      app: spring-server
+  strategy: {}
+  template: #pod를 구성하는 요소의 틀. 붕어빵 틀
+    metadata:
+      labels:
+        app: spring-server #IP address 대신 사용
+    spec:
+      containers:
+        - image: rkdgh98/eonggum-spring
+          name: spring-server
+          ports:
+            - containerPort: 8080

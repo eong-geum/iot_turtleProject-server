@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  labels:
+    app: worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: worker
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: worker #IP address 대신 사용 domain name
+    spec:
+      containers:
+        - image: rkdgh98/eonggum-worker
+          name: worker
+          ports:
+            - containerPort: 5000
