@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  spring-server:
+    image: rkdgh98/eonggum-spring
+    ports:
+      - "8080:8080"
+  worker:
+    image: rkdgh98/eonggum-worker
+    
